@@ -43,41 +43,56 @@ pNum=(nrows-1)*(ncols-1) # 点总数 包括含nan的 以后再删
 
 points=np.zeros([pNum,3],dtype="float")
 
+num=0
 for i in range(1,nrows):
     for j in range(1,ncols):
-        print(i)
-        col=(i-1)*(j-1)
-        # W
-        points[col,0]=data[i,j]
         
-        # S
-        points[col,1]=data[i,0]
+        if np.isnan(data[i,j])==True:
+            pass
+        else:
+            # W
+            points[num,0]=data[i,j]
+            
+            # S
+            points[num,1]=data[i,0]
+            
+            # H
+            points[num,2]=data[0,j]
+            
+        num+=1
         
-        # H
-        points[col,2]=data[0,j]
+        
 	
-	
+# 去除带nan的
+s=np.sum(points,axis=1)
+id=np.argwhere(s==0)
+points=np.delete(points,id,axis=0)
 
-x = points[:, 0]  # [ 0  3  6  9 12 15 18 21]
-y = points[:, 1]  # [ 1  4  7 10 13 16 19 22]
-z = points[:, 2]  # [ 2  5  8 11 14 17 20 23]
+
+x = points[:, 0]  
+y = points[:, 1]  
+z = points[:, 2]  
   
   
 # 绘制散点图
 fig = plt.figure()
 ax = Axes3D(fig)
 ax.scatter(x, y, z)
+
+# ax.plot3D(x, y, z)
   
   
 # 添加坐标轴(顺序是Z, Y, X)
 ax.set_zlabel('Z', fontdict={'size': 15, 'color': 'red'})
 ax.set_ylabel('Y', fontdict={'size': 15, 'color': 'red'})
 ax.set_xlabel('X', fontdict={'size': 15, 'color': 'red'})
+plt.title("船左舷（坐标压缩）")
 plt.show()
 
         
         
-
+plt.figure()
+plt.scatter(y,x)
 
 
 
