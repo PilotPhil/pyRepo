@@ -182,6 +182,7 @@ def count4p(X,pf):
                 j=j+1
         
         next=np.delete(next,used)
+        used=np.asarray([],dtype=int) # 恢复空状态
         L=next.size
         i=0
         j=1
