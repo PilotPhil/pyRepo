@@ -16,136 +16,169 @@
 import xlrd
 import numpy as np
 import scipy as sp
+from scipy.interpolate import spline
 import matplotlib
 from matplotlib import pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 matplotlib.rcParams['font.family'] = 'SimHei'
  
+#-----------------从表格复制指定页的数据-----------------#
+def copyData(name,sheetIndex):
+    xls = xlrd.open_workbook(name) # 打开表格name  xxx.xlsx
+    table = xls.sheets()[sheetIndex] # 打开某张表
+    nrows = table.nrows # 行数
+    ncols = table.ncols # 列数
+    
+    data=np.zeros([nrows,ncols],dtype="float")
+    
+    for i in range(0,nrows): # 将表格读取到数组
+        for j in range(0,ncols):
+            rawVal=table.cell(i, j).value 
+            if isinstance(rawVal,str)==True: # 空单元格其实是空字符串 如果是字符串
+                data[i,j]=np.nan
+            else:
+                data[i,j]=float(rawVal)
+    
+    return data # 返回表格中数据
 
-xls = xlrd.open_workbook('test.xlsx') # 打开表格
-table = xls.sheets()[0] # 打开第一张表
-nrows = table.nrows # 行数
-ncols = table.ncols # 列数
-
-data=np.zeros([nrows,ncols],dtype="float")
-
-for i in range(0,nrows): # 将表格读取到数组
-    for j in range(0,ncols):
-        rawVal=table.cell(i, j).value 
-        if isinstance(rawVal,str)==True: # 空单元格其实是空字符串 如果是字符串
-            data[i,j]=np.nan
-        else:
-            data[i,j]=float(rawVal)
-            
-# A=(W,S,H) 半宽 站号 高度
-
-pNum=(nrows-1)*(ncols-1) # 点总数 包括含nan的 以后再删
-
-points=np.zeros([pNum,3],dtype="float")
-
-num=0
-for i in range(1,nrows):
-    for j in range(1,ncols):
+#--------------------封装的三维散点图-------------------#
+def scatter3D(points):
+    x = points[:, 0]  
+    y = points[:, 1]  
+    z = points[:, 2]  
         
-        if np.isnan(data[i,j])==True:
-            pass
-        else:
-            # W
-            points[num,0]=data[i,j]
-            
-            # S
-            points[num,1]=data[i,0]
-            
-            # H
-            points[num,2]=data[0,j]
-            
-        num+=1
-        
-        
-	
-# 去除带nan的
-s=np.sum(points,axis=1)
-id=np.argwhere(s==0)
-points=np.delete(points,id,axis=0)
+    # 绘制散点图
+    fig = plt.figure()
+    ax = Axes3D(fig)
+    ax.scatter(x, y, z)
+    
+    # 添加坐标轴(顺序是Z, Y, X)
+    ax.set_zlabel('Z', fontdict={'size': 15, 'color': 'red'})
+    ax.set_ylabel('Y', fontdict={'size': 15, 'color': 'red'})
+    ax.set_xlabel('X', fontdict={'size': 15, 'color': 'red'})
+    plt.title("船左舷（坐标压缩）")
+    plt.show()
+
+#------------------第一部分数据点生成-------------------#
+def generate1(data):
+    wData=data[1:,1:] # 复制半宽值 二维数组
+    sData=data[1:,0] # 复制站号*站距
+    hData=data[0,1:] # 复制高度值
+    
+    nrows,ncols=wData.shape # 获取半宽值行列数
+    
+    Points=np.zeros([nrows*ncols,3],dtype="float")
+    
+    for i in range(0,nrows):
+        for j in range(0,ncols):
+            Points[i*ncols+j,0]=wData[i,j]
+            Points[i*ncols+j,1]=sData[i]
+            Points[i*ncols+j,2]=hData[j]
+    
+    # 去除nan元素
+    s=np.sum(Points,axis=1)
+    id=np.argwhere(np.isnan(s))
+    Points=np.delete(Points,id,axis=0)
+    
+    return Points
+
+#------------------第二部分数据点生成-------------------#
+def generate2(data):
+    # 沿用第一部分生成函数
+    # 但需要交换点数组中的半宽和高度数据列
+    Points=generate1(data)
+    Points[:,[0,2]]=Points[:,[2,0]] # 交换0列与2列
+    
+    return Points
+
+#------------------第三部分数据点生成-------------------#
+def generate3(data):
+    sData=data[:,0]
+    temp=data[:,1:] # wData 和 hData
+    nrows,ncols=temp.shape
+    
+    wData=temp[:,0:int(ncols/2)]
+    hData=temp[:,int(ncols/2):]
+    
+    nrows,ncols=wData.shape # 重新
+    
+    Points=np.zeros([nrows*ncols,3],dtype="float")
+    
+    for i in range(0,nrows):
+        for j in range(0,ncols):
+            Points[i*ncols+j,0]=wData[i,j]
+            Points[i*ncols+j,1]=sData[i]
+            Points[i*ncols+j,2]=hData[i,j]
+
+    # 去除nan元素
+    s=np.sum(Points,axis=1)
+    id=np.argwhere(np.isnan(s))
+    Points=np.delete(Points,id,axis=0)
+    
+    return Points
+
+#---------------------数据点总生成---------------------#
+def generatePoints(name):
+    data1=copyData(name,0) # 复制数据0
+    Points1=generate1(data1)
+    
+    data2=copyData(name,1) # 复制数据1
+    Points2=generate2(data2)
+    
+    data3=copyData(name,2) # 复制数据2
+    Points3=generate3(data3)
+
+    allPoints=np.concatenate((Points1,Points2,Points3),axis=0) # 按行组合
+    allPoints=allPoints[allPoints[:,1].argsort(),:] # 按站号排序
+    
+    return allPoints
 
 
-x = points[:, 0]  
-y = points[:, 1]  
-z = points[:, 2]  
-  
-  
-# 绘制散点图
-fig = plt.figure()
-ax = Axes3D(fig)
-ax.scatter(x, y, z)
+#-----------------xxxxxxxxxxxxxx-----------------#
 
-# ax.plot3D(x, y, z)
-  
-  
-# 添加坐标轴(顺序是Z, Y, X)
-ax.set_zlabel('Z', fontdict={'size': 15, 'color': 'red'})
-ax.set_ylabel('Y', fontdict={'size': 15, 'color': 'red'})
-ax.set_xlabel('X', fontdict={'size': 15, 'color': 'red'})
-plt.title("船左舷（坐标压缩）")
-plt.show()
-
-        
-        
-plt.figure()
-plt.scatter(y,x)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# =============================================================================
-# # 数据
-# data = np.arange(24).reshape((8, 3))
-# # data的值如下：
-# # [[ 0  1  2]
-# #  [ 3  4  5]
-# #  [ 6  7  8]
-# #  [ 9 10 11]
-# #  [12 13 14]
-# #  [15 16 17]
-# #  [18 19 20]
-# #  [21 22 23]]
-# x = data[:, 0]  # [ 0  3  6  9 12 15 18 21]
-# y = data[:, 1]  # [ 1  4  7 10 13 16 19 22]
-# z = data[:, 2]  # [ 2  5  8 11 14 17 20 23]
-#  
-#  
-# # 绘制散点图
-# fig = plt.figure()
-# ax = Axes3D(fig)
-# ax.scatter(x, y, z)
-#  
-#  
-# # 添加坐标轴(顺序是Z, Y, X)
-# ax.set_zlabel('Z', fontdict={'size': 15, 'color': 'red'})
-# ax.set_ylabel('Y', fontdict={'size': 15, 'color': 'red'})
-# ax.set_xlabel('X', fontdict={'size': 15, 'color': 'red'})
-# plt.show()
-# =============================================================================
 
 #---------------------测试-----------------------#
 if __name__ == "__main__":
-    pass
-     
+
+    allPoints=generatePoints("test.xlsx")
+    
+    scatter3D(allPoints)
+    
+    sData=allPoints[:,1]
+    sData=np.unique(sData)
+    
+    a=np.argwhere(allPoints[:,1]==sData[0])
+    a=allPoints[a,:]
+    
+    fig = plt.figure()
+    L=sData.size
+    
+    for i in range(0,L):
+        p=allPoints[allPoints[:,1]==sData[i]]
+        p=p[p[:,0].argsort(),:]
+    
+
+        # 设置三维图形模式
+        ax = fig.gca(projection='3d')
+        
+        # 数据
+        x = p[:, 0]  
+        y = p[:, 1]  
+        z = p[:, 2]  
+        
+        # 绘制图形
+        ax.plot(x, y, z, label='parametric curve')
+        
+        
+        
+    # 显示图例
+    ax.legend()
+    
+    # 显示图形
+    plt.show()
+    
+    
+    
+    
+    
+    
