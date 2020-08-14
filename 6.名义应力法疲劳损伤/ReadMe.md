@@ -52,3 +52,16 @@ dm100=dm*100                    # 百分比
 print('损伤度%.7f%%'%dm100)
 ```
 
+## 3.fig
+
+<img src=".\pic\1.svg" width="600" />
+
+<img src=".\pic\2.svg" width="600" />
+
+<img src=".\pic\3.svg" width="600" />
+
+<img src=".\pic\4.svg" width="600" />
+
+<img src=".\pic\5.svg" width="600" />
+
+<img src=".\pic\6.svg" width="600" />

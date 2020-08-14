@@ -95,3 +95,12 @@ for i in np.linspace(0,pid.size-2,pid.size-1,endpoint=True,dtype="int"):
         plt.plot(x,H2)
 ```
 
+## 3.fig
+
+<img src=".\pic\1.svg" width="600" />
+
+<img src=".\pic\2.svg" width="600" />
+
+<img src=".\pic\3.svg" width="600" />
+
+<img src=".\pic\4.svg" width="600" />
