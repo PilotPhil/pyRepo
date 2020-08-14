@@ -14,9 +14,9 @@
 """
 
 import xlrd
+import xlwt
 import numpy as np
 import scipy as sp
-from scipy.interpolate import spline
 import matplotlib
 from matplotlib import pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
@@ -144,38 +144,49 @@ if __name__ == "__main__":
     
     scatter3D(allPoints)
     
-    sData=allPoints[:,1]
-    sData=np.unique(sData)
+    # 结果写入到excel表格
     
-    a=np.argwhere(allPoints[:,1]==sData[0])
-    a=allPoints[a,:]
+    workbook=xlwt.Workbook()
+    worksheet = workbook.add_sheet("test")
+    worksheet.write(0,0,"A1Data")
+    workbook.save("points.xls")
     
-    fig = plt.figure()
-    L=sData.size
     
-    for i in range(0,L):
-        p=allPoints[allPoints[:,1]==sData[i]]
-        p=p[p[:,0].argsort(),:]
     
-
-        # 设置三维图形模式
-        ax = fig.gca(projection='3d')
-        
-        # 数据
-        x = p[:, 0]  
-        y = p[:, 1]  
-        z = p[:, 2]  
-        
-        # 绘制图形
-        ax.plot(x, y, z, label='parametric curve')
-        
-        
-        
-    # 显示图例
-    ax.legend()
-    
-    # 显示图形
-    plt.show()
+# =============================================================================
+#     sData=allPoints[:,1]
+#     sData=np.unique(sData)
+#     
+#     a=np.argwhere(allPoints[:,1]==sData[0])
+#     a=allPoints[a,:]
+#     
+#     fig = plt.figure()
+#     L=sData.size
+#     
+#     for i in range(0,L):
+#         p=allPoints[allPoints[:,1]==sData[i]]
+#         p=p[p[:,0].argsort(),:]
+#     
+# 
+#         # 设置三维图形模式
+#         ax = fig.gca(projection='3d')
+#         
+#         # 数据
+#         x = p[:, 0]  
+#         y = p[:, 1]  
+#         z = p[:, 2]  
+#         
+#         # 绘制图形
+#         ax.plot(x, y, z)
+#         
+#         
+#         
+#     # 显示图例
+#     ax.legend()
+#     
+#     # 显示图形
+#     plt.show()
+# =============================================================================
     
     
     
