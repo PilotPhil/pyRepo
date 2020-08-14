@@ -23,12 +23,7 @@ from matplotlib import pyplot as plt
 matplotlib.rcParams['font.family'] = 'SimHei'
 
 
-# Step1:选择合适的波谱---ITTC-Modified Pierson-Moskowitz (Hs,T1)
 
-Hs=1.8 # 有义波高
-T1=2   # 海浪特征周期
-
-w=np.arange(1.5,8.501,0.001)
 
 #-----------------ITTC-Modified PM Spec-----------------#
 def mPMspec(w,Hs,T1,pf):
@@ -162,7 +157,10 @@ def aparts(w,N,al,ar):
 
 #-------------------------测试--------------------------#
 if __name__ == "__main__":
-    # Step1.选择合适的海浪谱
+    # Step1:选择合适的波谱---ITTC-Modified Pierson-Moskowitz (Hs,T1)
+    Hs=1.8 # 有义波高
+    T1=2   # 海浪特征周期
+    w=np.arange(1.5,8.501,0.001)
     S=mPMspec(w, Hs, T1, True) 
     
     # Step2.等能量划分频段

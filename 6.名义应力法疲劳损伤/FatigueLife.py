@@ -271,9 +271,9 @@ if __name__ == "__main__":
     plt.plot(np.arange(1,1e4+1),iss,'b')
     plt.title("载荷序列")
     
-    pv,id=findpv(iss,False)         # 提取峰谷点
-    re=seqadj(pv,False)             # 载荷历程调整
-    co=count4p(re,False)            # 四点法循环提取
+    pv,id=findpv(iss,True)         # 提取峰谷点
+    re=seqadj(pv,True)             # 载荷历程调整
+    co=count4p(re,True)            # 四点法循环提取
     sr=goodman(co[:,1],co[:,2],235) # 经过goodman修正的应力幅值
     di=distribute(sr,2,True)        # 分布统计个数
     dm=damage(sr,1)                 # 损伤统计
