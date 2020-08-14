@@ -133,63 +133,63 @@ def generatePoints(name):
     
     return allPoints
 
+#------------------结果写入到excel表格-----------------#
+def writeData(allPoints,workBookName):
+    workbook=xlwt.Workbook()
+    worksheet = workbook.add_sheet("test") # 创建sheet
+    
+    sData=allPoints[:,1] # 按站号
+    sData=np.unique(sData) # 去除重复
+    
+    L=sData.size
 
-#-----------------xxxxxxxxxxxxxx-----------------#
+    id=0 # 要写入的表格索引
+    
+    for r in range(0,L):
+        slc=allPoints[allPoints[:,1]==sData[r]] # 被选中的数组部分
+        slc=slc[slc[:,2].argsort(),:] # 再次按高度排序（前面已经按站号排序）
+        
+        nr,nc=slc.shape
+        
+        for i in range(0,nr):
+            worksheet.write(id,0,slc[i,0])
+            worksheet.write(id,1,slc[i,1])
+            worksheet.write(id,2,slc[i,2])
+            
+            id+=1
+        
+        id+=1
+        
+    workbook.save(workBookName)
+    
 
 
 #---------------------测试-----------------------#
 if __name__ == "__main__":
+    
+    allPoints=generatePoints("raw.xlsx")    # 从raw.xlsx型值表生成点
 
-    allPoints=generatePoints("test.xlsx")
+    writeData(allPoints,"points.xls")      # 写入点数据到points.xls
     
-    scatter3D(allPoints)
-    
-    # 结果写入到excel表格
-    
-    workbook=xlwt.Workbook()
-    worksheet = workbook.add_sheet("test")
-    worksheet.write(0,0,"A1Data")
-    workbook.save("points.xls")
+    # scatter3D(allPoints)                    # 三维散点图
     
     
     
-# =============================================================================
-#     sData=allPoints[:,1]
-#     sData=np.unique(sData)
-#     
-#     a=np.argwhere(allPoints[:,1]==sData[0])
-#     a=allPoints[a,:]
-#     
-#     fig = plt.figure()
-#     L=sData.size
-#     
-#     for i in range(0,L):
-#         p=allPoints[allPoints[:,1]==sData[i]]
-#         p=p[p[:,0].argsort(),:]
-#     
-# 
-#         # 设置三维图形模式
-#         ax = fig.gca(projection='3d')
-#         
-#         # 数据
-#         x = p[:, 0]  
-#         y = p[:, 1]  
-#         z = p[:, 2]  
-#         
-#         # 绘制图形
-#         ax.plot(x, y, z)
-#         
-#         
-#         
-#     # 显示图例
-#     ax.legend()
-#     
-#     # 显示图形
-#     plt.show()
-# =============================================================================
+
     
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
