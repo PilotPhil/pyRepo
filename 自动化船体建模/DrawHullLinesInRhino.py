@@ -5,7 +5,7 @@ import sys
 import rhinoscriptsyntax as rs
 
 
-workBook=xlrd.open_workbook("points.xls")
+workBook=xlrd.open_workbook("点数据.xls")
 workSheet=workBook.sheets()[0]
 nrows=workSheet.nrows # 行数
 ncols=workSheet.ncols # 列数

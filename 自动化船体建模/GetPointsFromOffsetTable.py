@@ -167,11 +167,11 @@ def writeData(allPoints,workBookName):
 #---------------------测试-----------------------#
 if __name__ == "__main__":
     
-    allPoints=generatePoints("raw.xlsx")    # 从raw.xlsx型值表生成点
+    allPoints=generatePoints("改造后型值表.xlsx")    # 从raw.xlsx型值表生成点
 
-    writeData(allPoints,"points.xls")      # 写入点数据到points.xls
+    writeData(allPoints,"点数据.xls")               # 写入点数据到points.xls
     
-    # scatter3D(allPoints)                    # 三维散点图
+    scatter3D(allPoints)                           # 三维散点图
     
     
     
