@@ -13,8 +13,8 @@ P1=saft(signal,Fs,pf) # DFT单边谱
 -------------------------------------------------
 """
 
-import math
 import numpy as np
+import scipy as sp
 import matplotlib
 from matplotlib import pyplot as plt
 matplotlib.rcParams['font.family'] = 'SimHei'
@@ -27,17 +27,18 @@ def saft(signal,Fs,pf):
     # pf：是否绘图
     
     L=signal.size # 信号长度
-    H=np.fft.fft(signal) # DFT
-    P2=np.abs(H/L) # 双边谱
-    P1=P2[0:L//2] # 单边谱
-    P1[1:-2]=2*P1[1:-2]
+    H=sp.fft.fft(signal) # DFT
+    H=H/L # 除以长度L得到各分量的能量
+    P2=np.abs(H) # 双边谱
+    P1=P2[0:L//2+1] # 单边谱
+    P1[1:-1]=2*P1[1:-1]
     
-    f=Fs*np.arange(0,L//2)/L # 真实频率轴 Hz/s
-    # f=2*math.pi*Fs*np.arange(0,L//2)/L # 角频率轴 rad/s
+    f=Fs*np.arange(0,L//2+1)/L # 真实频率轴 Hz/s
+    # f=2*math.pi*Fs*np.arange(0,L//2+1)/L # 角频率轴 rad/s
     
     if pf==True:
         plt.figure() # 新画布
-        plt.plot(f,P1)
+        plt.plot(f,P1,'b-')
         plt.title("DFT单边谱")
         plt.xlabel("f(Hz)")
         plt.ylabel("|P1(f)|")
