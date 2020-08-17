@@ -43,7 +43,8 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="last_opened_file_path" value="C:/Program Files/anaconda/Scripts/pyuic5.exe" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.tools" />
   </component>
   <component name="RunManager">
     <configuration name="SerialHelper" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
@@ -94,27 +95,45 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1685" height="194" key="GridCell.Tab.0.bottom" timestamp="1597590880278">
-      <screen x="0" y="0" width="1707" height="1027" />
+    <state x="1010" y="446" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1597627793391">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="1010" y="446" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1597627793391" />
+    <state x="794" y="400" key="#com.intellij.tools.ToolEditorDialog" timestamp="1597628044613">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="794" y="400" key="#com.intellij.tools.ToolEditorDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1597628044613" />
+    <state x="811" y="345" key="FileChooserDialogImpl" timestamp="1597627898355">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="811" y="345" key="FileChooserDialogImpl/0.0.2560.1400@0.0.2560.1400" timestamp="1597627898355" />
+    <state width="2539" height="401" key="GridCell.Tab.0.bottom" timestamp="1597630441792">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state width="1685" height="194" key="GridCell.Tab.0.bottom/0.0.1707.1027@0.0.1707.1027" timestamp="1597590880278" />
-    <state width="1685" height="194" key="GridCell.Tab.0.center" timestamp="1597590880278">
-      <screen x="0" y="0" width="1707" height="1027" />
+    <state width="2539" height="401" key="GridCell.Tab.0.bottom/0.0.2560.1400@0.0.2560.1400" timestamp="1597630441792" />
+    <state width="2539" height="401" key="GridCell.Tab.0.center" timestamp="1597630441792">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state width="1685" height="194" key="GridCell.Tab.0.center/0.0.1707.1027@0.0.1707.1027" timestamp="1597590880278" />
-    <state width="1685" height="194" key="GridCell.Tab.0.left" timestamp="1597590880278">
-      <screen x="0" y="0" width="1707" height="1027" />
+    <state width="2539" height="401" key="GridCell.Tab.0.center/0.0.2560.1400@0.0.2560.1400" timestamp="1597630441792" />
+    <state width="2539" height="401" key="GridCell.Tab.0.left" timestamp="1597630441792">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state width="1685" height="194" key="GridCell.Tab.0.left/0.0.1707.1027@0.0.1707.1027" timestamp="1597590880278" />
-    <state width="1685" height="194" key="GridCell.Tab.0.right" timestamp="1597590880278">
-      <screen x="0" y="0" width="1707" height="1027" />
+    <state width="2539" height="401" key="GridCell.Tab.0.left/0.0.2560.1400@0.0.2560.1400" timestamp="1597630441792" />
+    <state width="2539" height="401" key="GridCell.Tab.0.right" timestamp="1597630441792">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state width="1685" height="194" key="GridCell.Tab.0.right/0.0.1707.1027@0.0.1707.1027" timestamp="1597590880278" />
-    <state x="355" y="158" key="SettingsEditor" timestamp="1597588896447">
-      <screen x="0" y="0" width="1707" height="1027" />
+    <state width="2539" height="401" key="GridCell.Tab.0.right/0.0.2560.1400@0.0.2560.1400" timestamp="1597630441792" />
+    <state x="532" y="215" key="SettingsEditor" timestamp="1597628140155">
+      <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="355" y="158" key="SettingsEditor/0.0.1707.1027@0.0.1707.1027" timestamp="1597588896447" />
+    <state x="532" y="215" key="SettingsEditor/0.0.2560.1400@0.0.2560.1400" timestamp="1597628140155" />
   </component>
 </project>
